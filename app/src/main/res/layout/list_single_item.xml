@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="16dp"
+    android:background="@drawable/list_item_bg"
+    android:orientation="vertical"
+    android:paddingBottom="13dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="16dp">
+
+    <ImageView
+        android:id="@+id/i1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_calendar" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/date_added"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:includeFontPadding="false"
+        android:textColor="@android:color/black"
+        android:textStyle="bold"
+        tools:text="12th March 2018" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/total_earned"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="15dp"
+        android:includeFontPadding="false"
+        android:textColor="#32CD32"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        tools:text="$75.30" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/start_end_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/total_earned"
+        android:layout_marginLeft="25dp"
+        android:includeFontPadding="false"
+        android:textColor="@android:color/black"
+        tools:text="7:30 PM - 11:00 PM" />
+
+    <android.support.v7.widget.AppCompatTextView
+        android:id="@+id/salary_multiplier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/date_added"
+        android:layout_alignParentRight="true"
+        android:includeFontPadding="false"
+        android:textColor="@android:color/black"
+        tools:ignore="RelativeOverlap"
+        tools:text="$14.30" />
+
+    <ImageView
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:layout_alignBottom="@id/total_earned"
+        android:layout_marginBottom="4dp"
+        android:src="@drawable/ic_clock" />
+</RelativeLayout>

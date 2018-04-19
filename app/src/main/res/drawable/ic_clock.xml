@@ -1,0 +1,48 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="32dp"
+    android:height="32dp"
+    android:viewportHeight="32.0"
+    android:viewportWidth="32.0">
+    <path
+        android:fillColor="#000"
+        android:pathData="M16,0C7.16,0 0,7.16 0,16C0,24.84 7.16,32 16,32C24.84,32 32,24.84 32,16C31.99,7.17 24.83,0.01 16,0ZM16,30.93C7.75,30.93 1.07,24.25 1.07,16C1.07,7.75 7.75,1.07 16,1.07C24.25,1.07 30.93,7.75 30.93,16C30.92,24.24 24.24,30.92 16,30.93Z" />
+    <path
+        android:fillColor="#000"
+        android:pathData="M15.47,2.67h1.07v2.13h-1.07z" />
+    <path
+        android:fillColor="#000"
+        android:pathData="M4.19,9.8l0.53,-0.92l1.85,1.07l-0.53,0.92z" />
+    <path
+        android:fillColor="#000"
+        android:pathData="M4.18,22.21l1.85,-1.07l0.53,0.92l-1.85,1.07z" />
+    <path
+        android:fillColor="#000"
+        android:pathData="M15.47,27.2h1.07v2.13h-1.07z" />
+    <path
+        android:fillColor="#000"
+        android:pathData="M25.43,22.07l0.53,-0.92l1.85,1.07l-0.53,0.92z" />
+    <path
+        android:fillColor="#000"
+        android:pathData="M25.43,9.94l1.85,-1.07l0.53,0.92l-1.85,1.07z" />
+    <path
+        android:fillColor="#000"
+        android:pathData="M2.67,15.47h2.13v1.07h-2.13z" />
+    <path
+        android:fillColor="#000"
+        android:pathData="M8.87,27.28l1.07,-1.85l0.92,0.53l-1.07,1.85z" />
+    <path
+        android:fillColor="#000"
+        android:pathData="M21.14,25.96l0.92,-0.53l1.07,1.85l-0.92,0.53z" />
+    <path
+        android:fillColor="#000"
+        android:pathData="M27.2,15.47h2.13v1.07h-2.13z" />
+    <path
+        android:fillColor="#000"
+        android:pathData="M21.14,6.03l1.07,-1.85l0.92,0.53l-1.07,1.85z" />
+    <path
+        android:fillColor="#000"
+        android:pathData="M8.87,4.72l0.92,-0.53l1.07,1.85l-0.92,0.53z" />
+    <path
+        android:fillColor="#000"
+        android:pathData="M18.07,15.48C17.87,14.72 17.29,14.14 16.53,13.94L16.53,8.53C16.53,8.24 16.29,8 16,8C15.71,8 15.47,8.24 15.47,8.53L15.47,13.94C14.72,14.14 14.14,14.72 13.94,15.47L10.67,15.47C10.37,15.47 10.13,15.71 10.13,16C10.13,16.29 10.37,16.53 10.67,16.53L13.94,16.53C14.23,17.67 15.39,18.36 16.53,18.07C17.67,17.78 18.36,16.62 18.07,15.48ZM16,17.07C15.41,17.07 14.93,16.59 14.93,16C14.93,15.41 15.41,14.93 16,14.93C16.59,14.93 17.07,15.41 17.07,16C17.07,16.59 16.59,17.07 16,17.07Z" />
+</vector>

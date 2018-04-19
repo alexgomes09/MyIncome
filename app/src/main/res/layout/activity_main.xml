@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true"
+    android:descendantFocusability="beforeDescendants"
+    android:focusableInTouchMode="true"
+    android:paddingTop="40dp"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    tools:context="com.agomes.myincome.view.MainActivity">
+
+    <TextView
+        android:id="@+id/t1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Salary amount:"
+        android:textColor="@android:color/black"
+        android:textSize="20sp" />
+
+    <android.support.v7.widget.AppCompatEditText
+        android:id="@+id/et_salary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/t1"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/t1"
+        android:focusableInTouchMode="true"
+        android:hint="$14.50"
+        android:imeActionLabel="Save"
+        android:inputType="numberDecimal"
+        android:maxLength="5" />
+
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/check_mark"
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:layout_alignRight="@id/et_salary"
+        app:srcCompat="@drawable/check_mark_anim" />
+
+    <TextView
+        android:id="@+id/pick_start_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/t1"
+        android:layout_marginTop="50dp"
+        android:text="Work started at: PICK A TIME"
+        android:textColor="@android:color/black"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/pick_end_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pick_start_time"
+        android:layout_marginTop="30dp"
+        android:text="Work ended at: PICK A TIME"
+        android:textColor="@android:color/black"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/total_hours_worked"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pick_end_time"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        tools:text="You worked 4 hours today" />
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/btn_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/total_hours_worked"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="40dp"
+        android:layout_marginTop="40dp"
+        android:alpha="0"
+        android:background="@drawable/round_button"
+        android:paddingLeft="50dp"
+        android:paddingRight="50dp"
+        android:text="Save"
+        android:textColor="@android:color/white" />
+
+    <ImageView
+        android:id="@+id/list_item"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="40dp"
+        android:layout_marginRight="20dp"
+        android:src="@drawable/ic_list" />
+</RelativeLayout>
