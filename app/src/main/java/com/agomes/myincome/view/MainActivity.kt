@@ -22,10 +22,9 @@ import com.agomes.myincome.db.IncomeSchema
 import com.agomes.myincome.util.Constants
 import com.agomes.myincome.util.PreferenceUtil
 import kotlinx.android.synthetic.main.activity_main.*
-import org.joda.time.DateTime
-import org.joda.time.Duration
-import org.joda.time.Period
+import org.joda.time.*
 import org.joda.time.format.DateTimeFormat
+import kotlin.math.min
 
 @RequiresApi(Build.VERSION_CODES.KITKAT)
 class MainActivity : AppCompatActivity() {
@@ -99,7 +98,7 @@ class MainActivity : AppCompatActivity() {
             override fun onTimeSet(timePicker: TimePicker, hour: Int, minute: Int) {
 
                 if (settingStartTime) {
-                    startTime = DateTime().withDayOfYear(DateTime.now().dayOfYear).withHourOfDay(hour).withMinuteOfHour(minute)
+                    startTime = DateTime().withTime(hour, minute,0,0)
                     pick_start_time.text = Html.fromHtml("Work started at: <b>" + convert24to12hour(startTime) + "</b>")
 
                     if (endTime != null && endTime?.isBefore(startTime)!!) {
@@ -108,7 +107,8 @@ class MainActivity : AppCompatActivity() {
                     }
                     calculateTotalHoursWorked()
                 } else {
-                    endTime = DateTime().withDayOfYear(DateTime.now().dayOfYear).withHourOfDay(hour).withMinuteOfHour(minute).withSecondOfMinute(59)
+                    endTime = DateTime().withTime(hour,minute,0,0)
+
                     pick_end_time.text = Html.fromHtml("Work ended at: <b>" + convert24to12hour(endTime) + "</b>")
 
                     if (endTime?.isBefore(startTime)!!) {

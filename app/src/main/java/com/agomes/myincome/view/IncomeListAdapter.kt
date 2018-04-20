@@ -3,6 +3,7 @@ package com.agomes.myincome.view
 import android.content.Context
 import android.support.v7.widget.AppCompatTextView
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.view.HapticFeedbackConstants
 import android.view.LayoutInflater
 import android.view.View
@@ -24,6 +25,7 @@ public class IncomeListAdapter(
 
     var selectionMode: Boolean = false
     var selectedList: ArrayList<Int> = ArrayList(0)
+    var totalAllEarned: Float = 0f
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): IncomeViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.list_single_item, parent, false)
@@ -37,6 +39,9 @@ public class IncomeListAdapter(
         holder.totalErned.text = "$${listOfIncome[position]?.salary.toString()}"
 
         holder.itemView.isSelected = selectedList.contains(position)
+
+        totalAllEarned += listOfIncome[position]?.salary!!
+        Log.v("==TAG==", "IncomeListAdapter.onBindViewHolder " +totalAllEarned)
     }
 
     override fun getItemCount(): Int {
