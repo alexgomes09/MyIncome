@@ -1,9 +1,7 @@
 package com.agomes.myincome.db
 
-import android.util.Log
 import io.realm.DynamicRealm
 import io.realm.RealmMigration
-import io.realm.RealmObjectSchema
 import io.realm.RealmSchema
 
 /**

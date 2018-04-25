@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:animateLayoutChanges="true"
     android:descendantFocusability="beforeDescendants"
     android:focusableInTouchMode="true"
     android:paddingTop="40dp"
@@ -84,6 +83,7 @@
         android:paddingLeft="50dp"
         android:paddingRight="50dp"
         android:text="Save"
+        android:enabled="false"
         android:textColor="@android:color/white" />
 
     <ImageView

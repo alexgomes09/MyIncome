@@ -1,6 +1,5 @@
 package com.agomes.myincome.view
 
-import android.app.TimePickerDialog
 import android.content.Context
 import android.graphics.Rect
 import android.graphics.drawable.Animatable
@@ -14,17 +13,18 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
-import android.widget.TimePicker
 import android.widget.Toast
 import com.agomes.myincome.MyIncomeApplication
 import com.agomes.myincome.R
 import com.agomes.myincome.db.IncomeSchema
 import com.agomes.myincome.util.Constants
 import com.agomes.myincome.util.PreferenceUtil
+import com.agomes.myincome.view.custom.DateTimePickerDialog
 import kotlinx.android.synthetic.main.activity_main.*
-import org.joda.time.*
+import org.joda.time.DateTime
+import org.joda.time.Duration
+import org.joda.time.Period
 import org.joda.time.format.DateTimeFormat
-import kotlin.math.min
 
 @RequiresApi(Build.VERSION_CODES.KITKAT)
 class MainActivity : AppCompatActivity() {
@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         et_salary.onFocusChangeListener = View.OnFocusChangeListener { p0, p1 ->
-            resetViewAndDataState()
+            resetViewAndDataState(false)
             if (!p1 && et_salary.length() > 0) {
                 PreferenceUtil.writePreferenceValue(Constants.salaryMultiplier, et_salary.text.toString().toFloat())
                 check_mark.alpha = 1f
@@ -66,8 +66,17 @@ class MainActivity : AppCompatActivity() {
             saveToDB()
         }
 
+        list_item.setOnTouchListener({ v: View, event: MotionEvent ->
+            if (event.action == MotionEvent.ACTION_DOWN) {
+                v.animate().scaleX(0.8f).scaleY(0.8f).setDuration(200).start()
+            } else if (event.action == MotionEvent.ACTION_UP) {
+                v.animate().scaleX(1f).scaleY(1f).setDuration(200).start()
+            }
+            false
+        })
+
         list_item.setOnClickListener({
-            supportFragmentManager.beginTransaction().replace(android.R.id.content,IncomeListFragment()).addToBackStack(null).commit()
+            supportFragmentManager.beginTransaction().replace(android.R.id.content, IncomeListFragment()).addToBackStack(null).commit()
         })
     }
 
@@ -93,41 +102,55 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showTimePickerDialog(settingStartTime: Boolean) {
+        val fragment = DateTimePickerDialog()
 
-        val timePicker = TimePickerDialog(this@MainActivity, object : TimePickerDialog.OnTimeSetListener {
-            override fun onTimeSet(timePicker: TimePicker, hour: Int, minute: Int) {
+        if (!settingStartTime && startTime != null) {
+            val bundle = Bundle()
+            bundle.putLong("endTime", startTime!!.millis)
+            fragment.arguments = bundle
+        }
 
-                if (settingStartTime) {
-                    startTime = DateTime().withTime(hour, minute,0,0)
-                    pick_start_time.text = Html.fromHtml("Work started at: <b>" + convert24to12hour(startTime) + "</b>")
+        fragment.setDateTimeListener(settingStartTime, object : DateTimePickerDialog.OnDateTimeSetListener {
+            override fun onStartTimeSet(st: DateTime) {
 
-                    if (endTime != null && endTime?.isBefore(startTime)!!) {
-                        Toast.makeText(this@MainActivity, "End time must be greater than start time", Toast.LENGTH_SHORT).show()
-                        return
-                    }
-                    calculateTotalHoursWorked()
-                } else {
-                    endTime = DateTime().withTime(hour,minute,0,0)
+                startTime = st
+                pick_start_time.text = Html.fromHtml("Work started at: <b>" + convert24to12hour(startTime) + "</b>")
 
-                    pick_end_time.text = Html.fromHtml("Work ended at: <b>" + convert24to12hour(endTime) + "</b>")
-
-                    if (endTime?.isBefore(startTime)!!) {
-//                        endTime = endTime.plusDays(1);
-                        Toast.makeText(this@MainActivity, "End time must be greater than start time", Toast.LENGTH_SHORT).show()
-                        return
-                    }
-                    calculateTotalHoursWorked()
-                }
+                resetViewAndDataState(true)
+//                if (endTime != null && endTime?.isBefore(startTime)!!) {
+//                    Toast.makeText(this@MainActivity, "End time must be greater than start time", Toast.LENGTH_SHORT).show()
+//                    btn_save.animate()
+//                            .alpha(0f)
+//                            .translationY(-50f)
+//                            .setDuration(500)
+//                            .withStartAction({ btn_save.isEnabled = false })
+//                            .withEndAction({ btn_save.visibility = View.GONE })
+//                    return
+//                }
+//                calculateTotalHoursWorked()
             }
-        }, DateTime.now().hourOfDay, 0, false)
 
-        timePicker.setTitle(if (settingStartTime) {
-            "Work start time"
-        } else {
-            "Work end time"
+            override fun onEndTimeSet(et: DateTime) {
+
+                endTime = et
+                pick_end_time.text = Html.fromHtml("Work ended at: <b>" + convert24to12hour(endTime) + "</b>")
+
+                if (endTime?.isBefore(startTime)!!) {
+//                        endTime = endTime.plusDays(1)
+                    Toast.makeText(this@MainActivity, "End time must be greater than start time", Toast.LENGTH_SHORT).show()
+                    btn_save.animate()
+                            .alpha(0f)
+                            .translationY(-50f)
+                            .setDuration(500)
+                            .withStartAction({ btn_save.isEnabled = false })
+                            .withEndAction({ btn_save.visibility = View.GONE })
+                    return
+                }
+                calculateTotalHoursWorked()
+            }
         })
 
-        timePicker.show()
+        fragment.show(supportFragmentManager, null)
     }
 
     private fun calculateTotalHoursWorked() {
@@ -137,7 +160,7 @@ class MainActivity : AppCompatActivity() {
         val workedHours = Period(startTime, endTime).hours
         val workedMinutes = Period(startTime, endTime).minutes
 
-        var textToShow = "";
+        var textToShow: String
 
         if (workedHours <= 0) {
             textToShow = "You worked: <b>" + workedMinutes + "min </b> today"
@@ -148,26 +171,40 @@ class MainActivity : AppCompatActivity() {
         }
 
         salaryEarned = "%.2f".format(Duration(startTime, endTime).standardMinutes * (PreferenceUtil.readPreferenceValue(Constants.salaryMultiplier, 0f) / 60)).toFloat()
-        textToShow = textToShow + " and earned <b>" + salaryEarned + "</b>"
+        textToShow = textToShow + " and earned <b>$" + salaryEarned + "</b>"
 
         total_hours_worked.text = Html.fromHtml(textToShow)
 
-        btn_save.animate().alpha(1f).translationY(50f).setDuration(1000).withEndAction { btn_save.isEnabled = true }
+        btn_save.animate()
+                .alpha(1f)
+                .translationY(50f)
+                .setDuration(500)
+                .withStartAction({ btn_save.visibility = View.VISIBLE })
+                .withEndAction { btn_save.isEnabled = true }
     }
 
     private fun convert24to12hour(dateTime: DateTime?): String {
-        return DateTimeFormat.forPattern("hh:mm a").print(dateTime).toString()
+        return DateTimeFormat.forPattern("hh:mm a | dd MMM").print(dateTime).toString()
     }
 
-    private fun resetViewAndDataState(){
-        total_hours_worked.text = ""
-        pick_start_time.text = "Work started at: PICK A TIME"
-        pick_end_time.text = "Work ended at: PICK A TIME"
-        btn_save.alpha = 0f
-        btn_save.isEnabled = false
-        btn_save.translationY = -50f
-        startTime = null
-        endTime = null
+    private fun resetViewAndDataState(resetEnd: Boolean) {
+        if (resetEnd) {
+            total_hours_worked.text = ""
+            pick_end_time.text = "Work ended at: PICK A TIME"
+            endTime = null
+            btn_save.alpha = 0f
+            btn_save.isEnabled = false
+            btn_save.translationY = -50f
+        } else {
+            total_hours_worked.text = ""
+            pick_start_time.text = "Work started at: PICK A TIME"
+            pick_end_time.text = "Work ended at: PICK A TIME"
+            btn_save.alpha = 0f
+            btn_save.isEnabled = false
+            btn_save.translationY = -50f
+            startTime = null
+            endTime = null
+        }
     }
 
     private fun saveToDB() {
@@ -175,7 +212,7 @@ class MainActivity : AppCompatActivity() {
         realm.executeTransactionAsync(
                 {
                     val income = it.createObject(IncomeSchema::class.java)
-                    income.date = DateTime.now().millis
+                    income.date = startTime?.millis
                     income.startTime = startTime?.millis
                     income.endTime = endTime?.millis
                     income.salary = salaryEarned
@@ -185,7 +222,7 @@ class MainActivity : AppCompatActivity() {
                     Toast.makeText(this@MainActivity, "Saved Successfully!", Toast.LENGTH_SHORT).show()
                 },
                 {
-                    Log.v("==TAG==", "MainActivity.saveToDB Error" + it.message);
+                    Log.v("==TAG==", "MainActivity.saveToDB Error" + it.message)
                     Toast.makeText(this@MainActivity, it.localizedMessage, Toast.LENGTH_SHORT).show()
                 })
     }

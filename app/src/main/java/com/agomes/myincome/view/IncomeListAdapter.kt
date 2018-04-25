@@ -3,7 +3,6 @@ package com.agomes.myincome.view
 import android.content.Context
 import android.support.v7.widget.AppCompatTextView
 import android.support.v7.widget.RecyclerView
-import android.util.Log
 import android.view.HapticFeedbackConstants
 import android.view.LayoutInflater
 import android.view.View
@@ -18,14 +17,14 @@ import kotlin.collections.ArrayList
 /**
  * Created by agomes on 4/14/18.
  */
-public class IncomeListAdapter(
+class IncomeListAdapter(
         var listOfIncome: RealmResults<IncomeSchema>,
         var fragment: IncomeListFragment,
         val context: Context) : RecyclerView.Adapter<IncomeListAdapter.IncomeViewHolder>() {
 
     var selectionMode: Boolean = false
     var selectedList: ArrayList<Int> = ArrayList(0)
-    var totalAllEarned: Float = 0f
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): IncomeViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.list_single_item, parent, false)
@@ -33,15 +32,12 @@ public class IncomeListAdapter(
     }
 
     override fun onBindViewHolder(holder: IncomeViewHolder, position: Int) {
-        holder.dateAdded.text = "${DateTime(listOfIncome[position]?.date).toString("EEE, MMM d", Locale.ENGLISH)}"
+        holder.dateAdded.text = DateTime(listOfIncome[position]?.date).toString("EEE, MMM d yyyy", Locale.ENGLISH)
         holder.startEndTime.text = "${DateTime(listOfIncome[position]?.startTime).toString("hh:mm a")} - ${DateTime(listOfIncome[position]?.endTime).toString("hh:mm a")}"
         holder.salaryMultiplier.text = "$${listOfIncome[position]?.salaryMultiplier}"
-        holder.totalErned.text = "$${listOfIncome[position]?.salary.toString()}"
+        holder.totalErned.text = "$%.2f".format(listOfIncome[position]?.salary)
 
         holder.itemView.isSelected = selectedList.contains(position)
-
-        totalAllEarned += listOfIncome[position]?.salary!!
-        Log.v("==TAG==", "IncomeListAdapter.onBindViewHolder " +totalAllEarned)
     }
 
     override fun getItemCount(): Int {
@@ -73,7 +69,7 @@ public class IncomeListAdapter(
                 if (selectionMode && !selectedList.contains(adapterPosition)) {
                     selectedList.add(adapterPosition)
                     itemView.isSelected = true
-                    itemView.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS);
+                    itemView.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS)
                 } else if (selectionMode && selectedList.contains(adapterPosition)) {
                     itemView.isSelected = false
                     selectedList.remove(adapterPosition)

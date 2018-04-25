@@ -3,10 +3,7 @@ package com.agomes.myincome
 import android.app.Application
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
-import android.provider.SyncStateContract
-import android.util.Log
 import com.agomes.myincome.db.IncomeMigration
-import com.agomes.myincome.db.IncomeSchema
 import com.agomes.myincome.util.Constants
 import io.realm.Realm
 import io.realm.RealmConfiguration
@@ -32,9 +29,9 @@ class MyIncomeApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
-        instance = this;
+        instance = this
 
-        Realm.init(this);
+        Realm.init(this)
 
         realmConfig = RealmConfiguration.Builder()
                 .name("myIncome.realm")

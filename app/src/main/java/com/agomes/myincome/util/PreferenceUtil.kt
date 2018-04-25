@@ -1,8 +1,5 @@
 package com.agomes.myincome.util
 
-import android.R.id.edit
-import android.content.SharedPreferences
-import android.preference.PreferenceManager
 import android.support.annotation.Nullable
 import com.agomes.myincome.MyIncomeApplication
 

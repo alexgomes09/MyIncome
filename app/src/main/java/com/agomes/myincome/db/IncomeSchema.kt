@@ -1,7 +1,6 @@
 package com.agomes.myincome.db
 
 import io.realm.RealmObject
-import org.joda.time.DateTime
 
 /**
  * Created by agomes on 4/13/18.

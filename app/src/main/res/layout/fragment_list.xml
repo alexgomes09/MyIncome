@@ -1,44 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:clickable="true"
-    android:background="@android:color/white">
+    android:background="@android:color/white"
+    android:clickable="true">
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:background="@color/colorAccent"
-        android:layout_height="56dp">
+        android:layout_height="56dp"
+        android:background="@color/colorAccent">
 
         <TextView
             android:id="@+id/selection_count"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:textColor="@android:color/white"
             android:gravity="center"
             android:paddingLeft="16dp"
+            android:text="CANCEL 4 SELECTION"
+            android:textColor="@android:color/white"
             android:textStyle="bold"
-            android:visibility="gone"
-            android:text="CANCEL 4 SELECTION"/>
+            android:visibility="gone" />
 
         <ImageView
             android:id="@+id/delete_all"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:padding="15dp"
             android:layout_gravity="center_vertical|right"
-            android:src="@drawable/ic_delete"/>
+            android:padding="15dp"
+            android:src="@drawable/ic_delete" />
+    </FrameLayout>
 
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginTop="56dp"
+        android:background="#e1e1e1"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/total_hours_worked"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            tools:text="Total: 34hr 30min" />
+
+        <android.support.v7.widget.AppCompatTextView
+            android:id="@+id/total_salary_earned"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|center_vertical"
+            android:textColor="#32CD32"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            tools:text="$400.65" />
     </FrameLayout>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="56dp"
+        android:layout_marginTop="86dp"
+        android:clipToPadding="false"
         android:overScrollMode="never"
         android:padding="16dp"
-        android:clipToPadding="false"
         android:scrollbars="none" />
 
     <LinearLayout
@@ -46,7 +75,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="-30dp"
         android:gravity="center"
         android:orientation="vertical">
 
@@ -58,9 +86,9 @@
         <android.support.v7.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="30sp"
-            android:textStyle="bold"
             android:layout_marginTop="20dp"
-            android:text="List is empty" />
+            android:text="List is empty"
+            android:textSize="30sp"
+            android:textStyle="bold" />
     </LinearLayout>
 </FrameLayout>
