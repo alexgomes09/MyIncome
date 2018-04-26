@@ -7,7 +7,6 @@ import com.agomes.myincome.db.IncomeMigration
 import com.agomes.myincome.util.Constants
 import io.realm.Realm
 import io.realm.RealmConfiguration
-
 /**
  * Created by agomes on 4/8/18.
  */
@@ -22,7 +21,7 @@ class MyIncomeApplication : Application() {
             return PreferenceManager.getDefaultSharedPreferences(instance)
         }
 
-        fun getRealmInstance(): Realm{
+        fun getRealmInstance(): Realm {
             return Realm.getInstance(realmConfig)
         }
     }
