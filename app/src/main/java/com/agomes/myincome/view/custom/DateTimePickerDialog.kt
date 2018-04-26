@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import android.widget.DatePicker
 import android.widget.TimePicker
 import com.agomes.myincome.R
@@ -32,6 +33,7 @@ class DateTimePickerDialog : android.support.v4.app.DialogFragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        dialog.window.requestFeature(Window.FEATURE_NO_TITLE)
         return inflater.inflate(R.layout.date_time_picker_dialog, container, false)
     }
 

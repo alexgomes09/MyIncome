@@ -137,7 +137,7 @@ class MainActivity : AppCompatActivity() {
 
                 if (endTime?.isBefore(startTime)!!) {
 //                        endTime = endTime.plusDays(1)
-                    Toast.makeText(this@MainActivity, "End time must be greater than start time", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@MainActivity, "End time must be greater than start time", Toast.LENGTH_LONG).show()
                     btn_save.animate()
                             .alpha(0f)
                             .translationY(-50f)
