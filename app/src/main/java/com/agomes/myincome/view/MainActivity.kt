@@ -1,11 +1,13 @@
 package com.agomes.myincome.view
 
 import android.content.Context
+import android.content.DialogInterface
 import android.graphics.Rect
 import android.graphics.drawable.Animatable
 import android.os.Build
 import android.os.Bundle
 import android.support.annotation.RequiresApi
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.text.Html
 import android.util.Log
@@ -24,7 +26,6 @@ import kotlinx.android.synthetic.main.activity_main.*
 import org.joda.time.DateTime
 import org.joda.time.Duration
 import org.joda.time.Period
-import org.joda.time.format.DateTimeFormat
 
 @RequiresApi(Build.VERSION_CODES.KITKAT)
 class MainActivity : AppCompatActivity() {
@@ -101,6 +102,26 @@ class MainActivity : AppCompatActivity() {
         realm.close()
     }
 
+    override fun onBackPressed() {
+        if(supportFragmentManager.backStackEntryCount > 0){
+            super.onBackPressed()
+            return
+        }
+
+        (supportFragmentManager.backStackEntryCount < 0).let {
+            AlertDialog.Builder(this)
+                    .setTitle("EXIT ??")
+                    .setMessage("Do you want to exit the app")
+                    .setPositiveButton("Yes", DialogInterface.OnClickListener { dialog, id ->
+                        super.onBackPressed();
+                    })
+                    .setNegativeButton("No", DialogInterface.OnClickListener { dialog, id ->
+                        dialog.dismiss()
+                    })
+                    .create().show()
+        }
+    }
+
     private fun showTimePickerDialog(settingStartTime: Boolean) {
         val fragment = DateTimePickerDialog()
 
@@ -117,17 +138,6 @@ class MainActivity : AppCompatActivity() {
                 pick_start_time.text = Html.fromHtml("Work started at: <b>" + convert24to12hour(startTime) + "</b>")
 
                 resetViewAndDataState(true)
-//                if (endTime != null && endTime?.isBefore(startTime)!!) {
-//                    Toast.makeText(this@MainActivity, "End time must be greater than start time", Toast.LENGTH_SHORT).show()
-//                    btn_save.animate()
-//                            .alpha(0f)
-//                            .translationY(-50f)
-//                            .setDuration(500)
-//                            .withStartAction({ btn_save.isEnabled = false })
-//                            .withEndAction({ btn_save.visibility = View.GONE })
-//                    return
-//                }
-//                calculateTotalHoursWorked()
             }
 
             override fun onEndTimeSet(et: DateTime) {
@@ -184,7 +194,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun convert24to12hour(dateTime: DateTime?): String {
-        return DateTimeFormat.forPattern("hh:mm a | dd MMM").print(dateTime).toString()
+        return dateTime!!.toString("hh:mm a | dd MMM")
     }
 
     private fun resetViewAndDataState(resetEnd: Boolean) {

@@ -1,5 +1,6 @@
 package com.agomes.myincome.view.custom
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -17,7 +18,7 @@ import org.joda.time.DateTime
 class DateTimePickerDialog : android.support.v4.app.DialogFragment() {
 
     var dtListener: OnDateTimeSetListener? = null
-    var startTime: DateTime = DateTime.now().withSecondOfMinute(0).withMillisOfSecond(0)
+    var startTime: DateTime = DateTime.now().withMinuteOfHour(0).withSecondOfMinute(0).withMillisOfSecond(0)
     var endTime = startTime
 
     var year = startTime.year
@@ -54,6 +55,12 @@ class DateTimePickerDialog : android.support.v4.app.DialogFragment() {
             }
 
             dialog.dismiss()
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            timePicker.minute = 0
+        }else{
+            timePicker.currentMinute = 0
         }
 
         timePicker.setOnTimeChangedListener(object : TimePicker.OnTimeChangedListener {
