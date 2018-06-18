@@ -103,23 +103,20 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        if(supportFragmentManager.backStackEntryCount > 0){
+        if (supportFragmentManager.backStackEntryCount > 0) {
             super.onBackPressed()
             return
         }
-
-        (supportFragmentManager.backStackEntryCount < 0).let {
-            AlertDialog.Builder(this)
-                    .setTitle("EXIT ??")
-                    .setMessage("Do you want to exit the app")
-                    .setPositiveButton("Yes", DialogInterface.OnClickListener { dialog, id ->
-                        super.onBackPressed();
-                    })
-                    .setNegativeButton("No", DialogInterface.OnClickListener { dialog, id ->
-                        dialog.dismiss()
-                    })
-                    .create().show()
-        }
+        AlertDialog.Builder(this)
+                .setTitle("EXIT ??")
+                .setMessage("Do you want to exit the app")
+                .setPositiveButton("Yes", DialogInterface.OnClickListener { dialog, id ->
+                    super.onBackPressed();
+                })
+                .setNegativeButton("No", DialogInterface.OnClickListener { dialog, id ->
+                    dialog.dismiss()
+                })
+                .create().show()
     }
 
     private fun showTimePickerDialog(settingStartTime: Boolean) {
@@ -146,7 +143,7 @@ class MainActivity : AppCompatActivity() {
                 pick_end_time.text = Html.fromHtml("Work ended at: <b>" + convert24to12hour(endTime) + "</b>")
 
                 if (endTime?.isBefore(startTime)!!) {
-//                        endTime = endTime.plusDays(1)
+//                    endTime = endTime?.plusDays(1)
                     Toast.makeText(this@MainActivity, "End time must be greater than start time", Toast.LENGTH_LONG).show()
                     btn_save.animate()
                             .alpha(0f)
